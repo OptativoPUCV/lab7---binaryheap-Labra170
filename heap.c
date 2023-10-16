@@ -17,8 +17,14 @@ typedef struct Heap{
 } Heap;
 
 
-void* heap_top(Heap* pq){
-    return NULL;
+void* heap_top(Heap* pq)
+{
+  if (pq == NULL || pq->size == 0)
+  {
+    exit(EXIT_FAILURE);
+  }
+  
+  return pq->heapArray[0].data;
 }
 
 
