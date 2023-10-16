@@ -16,54 +16,51 @@ typedef struct Heap{
   int capac;
 } Heap;
 
-
 void* heap_top(Heap* pq)
 {
-  if (pq == NULL || pq->size == 0)
+  if (pq == NULL || pq->size == 0) // Si el heap está vacío o el tamaño es 0
   {
-    return NULL;
+    return NULL; // Entonces, no hay datos.
   }
   
-  return pq->heapArray[0].data;
+  return pq->heapArray[0].data; // Se regresa la "raíz" del montículo
 }
-
-
 
 void heap_push(Heap* pq, void* data, int priority)
 {
-  if (pq == NULL)
+  if (pq == NULL) // Si el montículo no existe
   {
-    return;
+    return; // Se regresa
   }
 
-  if (pq->size == pq->capac)
+  if (pq->size == pq->capac) // Si el montículo está a máxima capacidad
   {
-    pq->capac = pq->capac * 2 + 1;
-    pq->heapArray = (heapElem*)realloc(pq->heapArray, sizeof(heapElem) * pq->capac);
+    pq->capac = pq->capac * 2 + 1; // Se extiende con el doble más uno
+    pq->heapArray = (heapElem*)realloc(pq->heapArray, sizeof(heapElem) * pq->capac); // Se reasigna la memoria
 
-    if (pq->heapArray == NULL)
+    if (pq->heapArray == NULL) // Si no se pudo reasignar
     {
-      exit(EXIT_FAILURE);
+      exit(EXIT_FAILURE); // Finaliza fallidamente
     }
   }
 
-  heapElem nuevoElemento;
-  nuevoElemento.data = data;
-  nuevoElemento.priority = priority;
+  heapElem nuevoElemento; // El nuevo elemento a agregar al heap
+  nuevoElemento.data = data; // Se asigna la data
+  nuevoElemento.priority = priority; // Y la prioridad
 
-  int i = pq->size;
-  pq->heapArray[i] = nuevoElemento;
-  pq->size++;
+  int i = pq->size; // Se establece un indexador del tamaño de size
+  pq->heapArray[i] = nuevoElemento;  // El nuevo elemento se agrega a esa posición
+  pq->size++; // Se aumenta el size del heap
 
   while (i > 0 && pq->heapArray[i].priority > pq->heapArray[(i-1)/2].priority)
+    // Mientras no estemos en la raíz y la prioridad del actual sea mayor a la del padre
     {
-      heapElem aux = pq->heapArray[i];
-      pq->heapArray[i] = pq->heapArray[(i-1)/2];
-      pq->heapArray[(i-1)/2] = aux;
-      i = (i-1) / 2;
+      heapElem aux = pq->heapArray[i]; // Un auxiliar al elemento actual
+      pq->heapArray[i] = pq->heapArray[(i-1)/2]; // Se reemplaza con el padre
+      pq->heapArray[(i-1)/2] = aux; // Se actualiza el valor
+      i = (i-1) / 2; // Se va al padre
     }
 }
-
 
 void heap_pop(Heap* pq)
 {
@@ -107,22 +104,22 @@ void heap_pop(Heap* pq)
 
 Heap* createHeap()
 {
-  Heap *heap = (Heap*)malloc(sizeof(Heap));
+  Heap *heap = (Heap*)malloc(sizeof(Heap)); // Asignación de memoria
 
-  if (heap == NULL)
+  if (heap == NULL) // Si no se pudo asignar
   {
-    exit(EXIT_FAILURE);
+    exit(EXIT_FAILURE); // Finaliza fallidamente
   }
 
-  heap->size = 0;
-  heap->capac = 3;
-  heap->heapArray = (heapElem*)malloc(sizeof(heapElem)*heap->capac);
+  heap->size = 0; // Tamaño del heap
+  heap->capac = 3; // Capacidad mínima
+  heap->heapArray = (heapElem*)malloc(sizeof(heapElem)*heap->capac); // Asignación de memoria para el arreglo
 
-  if (heap->heapArray == NULL)
+  if (heap->heapArray == NULL) // Si no se pudo asignar memoria para el arreglo
   {
-    free(heap);
-    exit(EXIT_FAILURE);
+    free(heap); // Se libera el heap
+    exit(EXIT_FAILURE); // Finaliza fallidamente
   }
   
-  return heap;
+  return heap; // Se retorna.
 }
