@@ -14,3 +14,9 @@ Mon 16 Oct 2023 12:36:30 AM UTC:
  tests:  1|0
    [ INFO ] seteando size en 0
 9b0f77b
+Mon 16 Oct 2023 12:36:57 AM UTC: 
+ heap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests:  2|2
+total_score: 20/70
+32d52f1
